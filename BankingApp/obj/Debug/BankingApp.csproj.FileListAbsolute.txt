@@ -1,0 +1,10 @@
+D:\BankingApp\bin\Debug\BankingApp.dll.config
+D:\BankingApp\bin\Debug\BankingApp.dll
+D:\BankingApp\bin\Debug\BankingApp.pdb
+D:\BankingApp\obj\Debug\BankingApp.csproj.AssemblyReference.cache
+D:\BankingApp\obj\Debug\BankingApp.Form1.resources
+D:\BankingApp\obj\Debug\BankingApp.Properties.Resources.resources
+D:\BankingApp\obj\Debug\BankingApp.csproj.GenerateResource.cache
+D:\BankingApp\obj\Debug\BankingApp.csproj.CoreCompileInputs.cache
+D:\BankingApp\obj\Debug\BankingApp.dll
+D:\BankingApp\obj\Debug\BankingApp.pdb
