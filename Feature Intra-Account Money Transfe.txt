@@ -1,0 +1,61 @@
+Feature: Intra-Account Money Transfer
+  As a banking user
+  I want to transfer money between accounts
+  So that I can manage funds efficiently across different accounts
+
+  Background:
+    Given the banking system is running
+    And the following accounts exist:
+      | AccountType        | AccountId | Balance | CustomerType |
+      | Everyday Account   | 1001      | 500     | Normal       |
+      | Omni Account       | 2001      | 800     | Staff        |
+      | Investment Account | 3001      | 1000    | Normal       |
+
+  Scenario: Successful transfer between two valid accounts
+    Given I select source account "1001"
+    And I select target account "2001"
+    When I transfer 100 from source to target
+    Then the source account balance should be reduced by 100
+    And the target account balance should be increased by 100
+    And the transaction should be recorded as "Success"
+
+  Scenario: Transfer fails due to insufficient balance
+    Given I select source account "1001"
+    And I select target account "2001"
+    When I transfer 1000 from source to target
+    Then the system should block the transaction
+    And an error message "Insufficient funds" should be displayed
+
+  Scenario: Transfer between Investment account and Everyday account
+    Given I select source account "3001"
+    And I select target account "1001"
+    When I transfer 200 from source to target
+    Then the transfer should be completed successfully
+    And investment account rules should be applied if any restrictions exist
+
+  Scenario: Staff account transfer with fee adjustment
+    Given I select source account "2001"
+    And the account belongs to a staff customer
+    When I transfer 100 from staff account to another account
+    Then reduced or no transaction fee should be applied
+    And the transfer should complete successfully
+
+  Scenario: Invalid account selection
+    Given I do not select a valid source account
+    When I attempt to transfer 100
+    Then the system should display "Please select valid accounts"
+    And the transaction should not proceed
+
+  Scenario: Transfer with zero or negative amount
+    Given I select source account "1001"
+    And I select target account "2001"
+    When I transfer 0 from source to target
+    Then the system should reject the transaction
+    And display message "Invalid transfer amount"
+
+  Scenario: Transfer between same account
+    Given I select source account "1001"
+    And I select target account "1001"
+    When I transfer 50
+    Then the system should prevent the transfer
+    And display message "Cannot transfer to same account"
